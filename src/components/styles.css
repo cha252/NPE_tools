@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background: #f4f4f4;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.titleAndButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inputBoxes {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.inputBoxes > * {
+    flex: 1;
+}
+
+textarea {
+    width: 100%;
+    height: 320px;
+    padding: 12px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background: #0078d4;
+    color: white;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background: #005ea6;
+}
+
+.output {
+    white-space: normal;
+    background: white;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 10pt;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.centered-buttons-div {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.GW-input {
+    width: 100%;
+    height: 320px;
+    padding: 12px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
