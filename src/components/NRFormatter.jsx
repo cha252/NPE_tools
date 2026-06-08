@@ -4,166 +4,68 @@ import "./styles.css";
 function NRFormatter() {
 
     const sapInputRef = useRef(null);
-
-    const [emailText, setEmailText] =
-        useState("");
-
-    const [outputHtml, setOutputHtml] =
-        useState("");
+    const [emailText, setEmailText] = useState("");
+    const [outputHtml, setOutputHtml] = useState("");
 
     function getValue(text, startLabel, endLabels = null) {
+        const startIndex = text.indexOf(startLabel);
 
-        const startIndex =
-            text.indexOf(startLabel);
+        if (startIndex === -1) { return ""; }
 
-        if (startIndex === -1) {
-            return "";
-        }
-
-        const valueStart =
-            startIndex + startLabel.length;
-
-        let valueEnd =
-            text.length;
+        const valueStart = startIndex + startLabel.length;
+        let valueEnd = text.length;
 
         if (endLabels) {
-
-            if (!Array.isArray(endLabels)) {
-                endLabels = [endLabels];
-            }
+            if (!Array.isArray(endLabels)) { endLabels = [endLabels]; }
 
             endLabels.forEach(label => {
-
-                const index =
-                    text.indexOf(
-                        label,
-                        valueStart
-                    );
-
-                if (
-                    index !== -1 &&
-                    index < valueEnd
-                ) {
-                    valueEnd = index;
-                }
-
+                const index = text.indexOf(label, valueStart);
+                if (index !== -1 && index < valueEnd) {valueEnd = index;}
             });
         }
 
-        return text
-            .substring(
-                valueStart,
-                valueEnd
-            )
-            .trim();
+        return text.substring(valueStart, valueEnd).trim();
     }
 
-    function addLine(
-        label,
-        value
-    ) {
-
-        if (!value?.trim()) {
-            return "";
-        }
-
+    function addLine(label, value){
+        if (!value?.trim()) { return "";}
         return `${label}: ${value}`;
     }
 
     function formatPhone(phone) {
+        if (!phone) { return ""; }
 
-        if (!phone) {
-            return "";
+        let digits = phone.replace(/\D/g, "");
+
+        if (digits.startsWith("640")) { digits = "64" + digits.substring(3); }
+
+        if (digits.startsWith("642") && digits.length >= 10){
+            const local = "0" + digits.substring(2);
+            return local.replace(/(\d{3})(\d{3})(\d+)/, "$1 $2 $3");
         }
 
-        let digits =
-            phone.replace(/\D/g, "");
-
-        if (digits.startsWith("640")) {
-
-            digits =
-                "64" +
-                digits.substring(3);
+        if (digits.startsWith("64") && digits.length >= 10){
+            const local = "0" + digits.substring(2);
+            return local.replace(/(\d{2})(\d{3})(\d+)/, "$1 $2 $3");
         }
-
-        if (
-            digits.startsWith("642") &&
-            digits.length >= 10
-        ) {
-
-            const local =
-                "0" +
-                digits.substring(2);
-
-            return local.replace(
-                /(\d{3})(\d{3})(\d+)/,
-                "$1 $2 $3"
-            );
-        }
-
-        if (
-            digits.startsWith("64") &&
-            digits.length >= 10
-        ) {
-
-            const local =
-                "0" +
-                digits.substring(2);
-
-            return local.replace(
-                /(\d{2})(\d{3})(\d+)/,
-                "$1 $2 $3"
-            );
-        }
-
         return phone;
     }
 
-    function getSection(
-        text,
-        sectionHeader,
-        nextHeaders = []
-    ) {
+    function getSection(text, sectionHeader, nextHeaders = []){
+        const startIndex = text.indexOf(sectionHeader);
 
-        const startIndex =
-            text.indexOf(
-                sectionHeader
-            );
+        if (startIndex === -1) { return "";}
 
-        if (startIndex === -1) {
-            return "";
-        }
+        const contentStart = startIndex + sectionHeader.length;
 
-        const contentStart =
-            startIndex +
-            sectionHeader.length;
-
-        let endIndex =
-            text.length;
-
+        let endIndex = text.length;
         nextHeaders.forEach(header => {
+            const index = text.indexOf(header, contentStart);
 
-            const index =
-                text.indexOf(
-                    header,
-                    contentStart
-                );
-
-            if (
-                index !== -1 &&
-                index < endIndex
-            ) {
-
-                endIndex =
-                    index;
-            }
-
+            if (index !== -1 && index < endIndex){ endIndex = index;}
         });
 
-        return text.substring(
-            contentStart,
-            endIndex
-        ).trim();
+        return text.substring(contentStart, endIndex).trim();
     }
 
     function convertSAPText() {
@@ -175,14 +77,14 @@ function NRFormatter() {
         const electricianSection = getSection(text, "ELECTRICIAN DETAILS", ["ELECTRICITY BILL PAYER DETAILS"]);
 
         //Email input
-        const emailText = document.getElementById("emailInput").value;
+        const emailContent = emailText;
 
         //Details from email
-        const workOrderNumber = getValue(emailText, "Work order number:", "Subject:");
-        const fullSubject = getValue(emailText, "Subject:", "Work order status:");
+        const workOrderNumber = getValue(emailContent, "Work order number:", "Subject:");
+        const fullSubject = getValue(emailContent, "Subject:", "Work order status:");
         const parts = fullSubject.split("-");
         const subject = parts.slice(0, 3).join("-");
-        const icpNumber = getValue(emailText, "ICP number:", "END");
+        const icpNumber = getValue(emailContent, "ICP number:", "END");
 
         //Details from SAP
         const jobClassification = getValue(text, "Network Ready Job Classification:", ["Permanent/Temporary:", "SITE DETAILS"]);
@@ -293,110 +195,39 @@ function NRFormatter() {
     }
 
     async function copyOutput() {
-
-        const temp =
-            document.createElement(
-                "div"
-            );
-
-        temp.innerHTML =
-            outputHtml;
-
+        const temp = document.createElement("div");
+        temp.innerHTML = outputHtml;
         await navigator.clipboard.write([
-
             new ClipboardItem({
-
-                "text/html":
-                    new Blob(
-                        [outputHtml],
-                        {
-                            type:
-                            "text/html"
-                        }
-                    ),
-
-                "text/plain":
-                    new Blob(
-                        [temp.innerText],
-                        {
-                            type:
-                            "text/plain"
-                        }
-                    )
-
+                "text/html": new Blob([outputHtml], {type: "text/html"}),
+                "text/plain": new Blob([temp.innerText], {type: "text/plain"})
             })
-
         ]);
     }
 
     return (
-
         <>
-
-            <h1>
-                Network Ready Formatter
-            </h1>
+            <h1>Network Ready Formatter</h1>
 
             <div className="inputBoxes">
+                <div ref={sapInputRef} className="GW-input" contentEditable suppressContentEditableWarning/>
 
-                <div
-                    ref={sapInputRef}
-                    className="GW-input"
-                    contentEditable
-                    suppressContentEditableWarning
-                />
-
-                <textarea
-
-                    placeholder=
-                    "WO Email Text"
-
-                    value={emailText}
-
+                <textarea placeholder= "WO Email Text" value={emailText}
                     onChange={(e) =>
                         setEmailText(
                             e.target.value
                         )
                     }
-
                 />
-
             </div>
 
-            <div className=
-                "centered-buttons-div">
-
-                <button
-                    onClick={
-                        convertSAPText
-                    }
-                >
-                    Convert
-                </button>
-
-                <button
-                    onClick={
-                        copyOutput
-                    }
-                >
-                    Copy Output
-                </button>
-
+            <div className= "centered-buttons-div">
+                <button onClick={convertSAPText}>Convert</button>
+                <button onClick={copyOutput}>Copy Output</button>
             </div>
 
-            <div
-
-                className="output"
-
-                dangerouslySetInnerHTML={{
-                    __html:
-                    outputHtml
-                }}
-
-            />
-
+            <div className="output" dangerouslySetInnerHTML={{__html:outputHtml}}/>
         </>
-
     );
 }
 
