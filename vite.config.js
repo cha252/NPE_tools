@@ -1,5 +1,5 @@
 const { defineConfig } = require('vite')
 
 module.exports = defineConfig({
-  base: '/helpful-app/'
+  base: '/NPE_tools/'
 })
