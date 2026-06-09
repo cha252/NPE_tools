@@ -2,15 +2,11 @@ import { useRef, useState } from "react";
 import "./styles.css";
 
 function GWFormatter() {
-
     const inputRef = useRef(null);
-
     const [outputHtml, setOutputHtml] = useState("");
 
     function convert() {
-
-        const sourceTable =
-            inputRef.current.querySelector("table");
+        const sourceTable = inputRef.current.querySelector("table");
 
         if (!sourceTable) {
             alert("Paste a table first");
@@ -25,16 +21,10 @@ function GWFormatter() {
         let scopeHtml = "";
 
         rows.forEach(row => {
-
             const cells = [...row.cells];
-
             if (cells.length < 2) return;
-
-            const label =
-                cells[0].innerText.trim();
-
-            const value =
-                cells[1].innerText.trim();
+            const label = cells[0].innerText.trim();
+            const value = cells[1].innerText.trim();
 
             if (label.includes("Project Manager"))
                 pm = value;
@@ -43,22 +33,11 @@ function GWFormatter() {
                 wo = value;
 
             if (label === "Site") {
-
-                const divs =
-                    [...cells[1].querySelectorAll("div")];
-
-                site =
-                    divs
-                    .slice(1)
-                    .map(div => div.innerHTML)
-                    .join("<br>");
+                const divs = [...cells[1].querySelectorAll("div")];
+                site = divs.slice(1).map(div => div.innerHTML).join("<br>");
             }
 
-            if (label.includes("Scope of Services")) {
-
-                scopeHtml =
-                    cells[1].innerHTML;
-            }
+            if (label.includes("Scope of Services")) {scopeHtml = cells[1].innerHTML;}
         });
 
         const footerTable = `
@@ -184,58 +163,25 @@ function GWFormatter() {
     }
 
     async function copyOutput() {
-
-        const temp =
-            document.createElement("div");
-
+        const temp = document.createElement("div");
         temp.innerHTML = outputHtml;
-
         await navigator.clipboard.write([
             new ClipboardItem({
-
-                "text/html": new Blob(
-                    [outputHtml],
-                    { type: "text/html" }
-                ),
-
-                "text/plain": new Blob(
-                    [temp.innerText],
-                    { type: "text/plain" }
+                "text/html": new Blob([outputHtml], { type: "text/html" }),
+                "text/plain": new Blob([temp.innerText], { type: "text/plain" }
                 )
             })
         ]);
     }
 
     return (
-
         <>
-
             <h1>GW Table Formatter</h1>
-
-            <div
-                ref={inputRef}
-                className="GW-input"
-                contentEditable
-                suppressContentEditableWarning
-            />
-
+            <div ref={inputRef} className="GW-input" contentEditable suppressContentEditableWarning/>
             <br />
-
-            <button onClick={convert}>
-                Convert
-            </button>
-
-            <button onClick={copyOutput}>
-                Copy Output
-            </button>
-
-            <div
-                className="output"
-                dangerouslySetInnerHTML={{
-                    __html: outputHtml
-                }}
-            />
-
+            <button onClick={convert}>Convert</button>
+            <button onClick={copyOutput}>Copy Output</button>
+            <div className="output" dangerouslySetInnerHTML={{__html: outputHtml}}/>
         </>
     );
 }

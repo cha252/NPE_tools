@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import "./styles.css";
 
 function NRFormatter() {
-
     const sapInputRef = useRef(null);
     const [emailText, setEmailText] = useState("");
     const [outputHtml, setOutputHtml] = useState("");
