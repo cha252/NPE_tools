@@ -16,13 +16,10 @@ function App() {
         switch (selectedTool) {
             case "gw":
                 return <GWFormatter />;
-
             case "nr":
                 return <NRFormatter />;
-
             case "pdf":
                 return <PdfSplitter />;
-
             case "dg":
             default:
                 return <DGFormatter />;

@@ -37,7 +37,7 @@ function GWFormatter() {
                 site = divs.slice(1).map(div => div.innerHTML).join("<br>");
             }
 
-            if (label.includes("Scope of Services")) {scopeHtml = cells[1].innerHTML;}
+            if (label.includes("Scope of Services")) {scopeHtml = "";}
         });
 
         const footerTable = `
