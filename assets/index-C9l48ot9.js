@@ -108,26 +108,24 @@ end`},fa=function(){return`<`+[...arguments].join(``)+`>`},pa=function(e){return
 
             <tr>
                 <td nowrap>
-                    <strong>Stock Cable Used:</strong>
+                    <strong>Stock&nbsp;Cable&nbsp;Used:</strong>
                 </td>
-
                 <td style="width:100%;"></td>
             </tr>
 
             <tr>
                 <td nowrap>
-                    <strong>Ali Size / Meters:</strong>
+                    <strong>Ali&nbsp;Size/Meters:</strong>
                 </td>
-
-                <td></td>
+                <td style=width:100%"></td>
             </tr>
 
             <tr>
                 <td nowrap>
-                    <strong>Vintol Size / Meters:</strong>
+                    <strong>Vintol&nbsp;Size/Meters:</strong>
                 </td>
 
-                <td></td>
+                <td style="width:100%"></td>
             </tr>
 
         </table>
