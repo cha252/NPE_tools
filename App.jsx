@@ -35,7 +35,7 @@ function App() {
                     className="toggle-btn"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
-                    ☰
+                    <div>☰</div>
                 </button>
 
                 {sidebarOpen && (
