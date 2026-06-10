@@ -8,13 +8,11 @@ import NRFormatter from "./src/components/NRFormatter";
 import "./App.css";
 
 function App() {
-
-    const [selectedTool, setSelectedTool] =
-        useState("dg");
+    const [selectedTool, setSelectedTool] = useState("dg");
+    const [sidebarOpen, setSidebarOpen] = useState(true);
 
     function renderTool() {
-
-        switch(selectedTool) {
+        switch (selectedTool) {
             case "gw":
                 return <GWFormatter />;
 
@@ -31,15 +29,37 @@ function App() {
     }
 
     return (
-
         <div className="layout">
-            <aside className="sidebar">
-                <button onClick={() => setSelectedTool("dg")}> DG Formatter </button>
-                <button onClick={() => setSelectedTool("pdf")}> PDF Splitter </button>
-                <button onClick={() => setSelectedTool("gw")}> GW Formatter </button>
-                <button onClick={() => setSelectedTool("nr")}> NR Formatter </button>
+
+            <button
+                className="menu-button"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
+                ☰
+            </button>
+
+            <aside className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
+                <button onClick={() => setSelectedTool("dg")}>
+                    DG Formatter
+                </button>
+
+                <button onClick={() => setSelectedTool("pdf")}>
+                    PDF Splitter
+                </button>
+
+                <button onClick={() => setSelectedTool("gw")}>
+                    GW Formatter
+                </button>
+
+                <button onClick={() => setSelectedTool("nr")}>
+                    NR Formatter
+                </button>
             </aside>
-            <main className="content"> {renderTool()}</main>
+
+            <main className="content">
+                {renderTool()}
+            </main>
+
         </div>
     );
 }
