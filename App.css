@@ -1,35 +1,33 @@
 .layout {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .sidebar {
+    background: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar.open {
     width: 220px;
-    transform: translateX(0);
-    transition: transform 0.3s ease;
 }
 
 .sidebar.closed {
-    transform: translateX(-100%);
+    width: 60px; /* wide enough for menu button */
 }
 
-.sidebar.closed {
-    width: 0;
-    padding: 0;
-}
-
-.sidebar button {
-    white-space: nowrap;
+.toggle-btn {
+    width: 40px;
+    height: 40px;
+    align-self: flex-start;
 }
 
 .content {
     flex: 1;
     padding: 20px;
-}
-
-.menu-button {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1000;
 }
