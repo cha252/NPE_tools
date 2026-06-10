@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaBars } from "react-icons/fa";
 
 import DGFormatter from "./src/components/DGFormatter";
 import PdfSplitter from "./src/components/PdfSplitter";
@@ -31,13 +32,13 @@ function App() {
     return (
         <div className="layout">
             <aside className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
+
                 <button
                     className="toggle-btn"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
-                    <div>☰</div>
+                    <FaBars />
                 </button>
-
                 {sidebarOpen && (
                     <>
                         <button onClick={() => setSelectedTool("dg")}>
