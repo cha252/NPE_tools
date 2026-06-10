@@ -41,21 +41,21 @@ function App() {
                 </button>
                 {sidebarOpen && (
                     <>
-                        <button onClick={() => setSelectedTool("dg")}>
-                            DG Formatter
-                        </button>
+                    <button onClick={() => setSelectedTool("dg")}>
+                        {sidebarOpen ? "DG Formatter" : "DG"}
+                    </button>
 
-                        <button onClick={() => setSelectedTool("pdf")}>
-                            PDF Splitter
-                        </button>
+                    <button onClick={() => setSelectedTool("pdf")}>
+                        {sidebarOpen ? "PDF Splitter" : "PDF"}
+                    </button>
 
-                        <button onClick={() => setSelectedTool("gw")}>
-                            GW Formatter
-                        </button>
+                    <button onClick={() => setSelectedTool("gw")}>
+                        {sidebarOpen ? "GW Formatter" : "GW"}
+                    </button>
 
-                        <button onClick={() => setSelectedTool("nr")}>
-                            NR Formatter
-                        </button>
+                    <button onClick={() => setSelectedTool("nr")}>
+                        {sidebarOpen ? "NR Formatter" : "NR"}
+                    </button>
                     </>
                 )}
             </aside>
