@@ -13,7 +13,7 @@ function PdfSplitter() {
 
         formData.append("pdf", blob, "document.pdf");
 
-        const response = await fetch("http://localhost:8000/ocr", {
+        const response = await fetch("http://localhost:5000/ocr", {
             method: "POST",
             body: formData
         });
@@ -23,9 +23,6 @@ function PdfSplitter() {
         }
 
         const data = await response.json();
-        
-        console.log(data);
-        console.log(data.filename);
 
         return data.filename;
     }
@@ -66,7 +63,7 @@ function PdfSplitter() {
             }
             catch (error) {
                 console.error(error);
-                filename = `Doc ${fileNumber}`;
+                filename = `Document ${fileNumber}`;
             }
 
             const fileHandle = await folderHandle.getFileHandle(
@@ -86,7 +83,7 @@ function PdfSplitter() {
 
     return (
         <>
-            <h2>Split PDF into 2-page files and rename</h2>
+            <h2>Split PDF into 2-page files</h2>
 
             <input
                 type="file"
