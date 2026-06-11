@@ -4,6 +4,29 @@ import { PDFDocument } from "pdf-lib";
 function PdfSplitter() {
     const fileInputRef = useRef(null);
 
+    async function getFilenameFromOCR(pdfBytes) {
+        const formData = new FormData();
+
+        const blob = new Blob([pdfBytes], {
+            type: "application/pdf"
+        });
+
+        formData.append("pdf", blob, "document.pdf");
+
+        const response = await fetch("http://localhost:5000/ocr", {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error("OCR request failed");
+        }
+
+        const data = await response.json();
+
+        return data.filename;
+    }
+
     async function splitPdf() {
         const file = fileInputRef.current.files[0];
 
@@ -33,11 +56,20 @@ function PdfSplitter() {
 
             const outputBytes = await newPdf.save();
 
+            let filename;
+
+            try {
+                filename = await getFilenameFromOCR(outputBytes);
+            }
+            catch (error) {
+                console.error(error);
+                filename = `Document ${fileNumber}`;
+            }
+
             const fileHandle = await folderHandle.getFileHandle(
-                `Document ${fileNumber}.pdf`,
+                `${filename}.pdf`,
                 { create: true }
             );
-
             const writable = await fileHandle.createWritable();
 
             await writable.write(outputBytes);

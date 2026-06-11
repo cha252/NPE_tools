@@ -81,7 +81,7 @@ def extract_filename(pdf_path):
             break
 
     # Remove invalid filename characters
-    address = re.sub(r'[<>:;"/\\|?*]', "", address)
+    address = re.sub(r'[<>,:;"/\\|?*]', "", address)
 
     filename = f"{job_number} - {address} - As Builts"
 

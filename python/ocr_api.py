@@ -1,0 +1,37 @@
+from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
+import tempfile
+import os
+
+from python.test_OCR import extract_filename
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.post("/ocr")
+async def ocr(pdf: UploadFile = File(...)):
+
+    with tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=".pdf"
+    ) as tmp:
+
+        tmp.write(await pdf.read())
+        temp_path = tmp.name
+
+    try:
+        filename = extract_filename(temp_path)
+
+        return {
+            "filename": filename
+        }
+
+    finally:
+        os.remove(temp_path)
