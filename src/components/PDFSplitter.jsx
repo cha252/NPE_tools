@@ -83,7 +83,7 @@ function PdfSplitter() {
 
     return (
         <>
-            <h2>Split PDF into 2-page files</h2>
+            <h2>Split PDF into 2-page files and rename</h2>
 
             <input
                 type="file"
