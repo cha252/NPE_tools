@@ -63,7 +63,7 @@ function PdfSplitter() {
             }
             catch (error) {
                 console.error(error);
-                filename = `Document ${fileNumber}`;
+                filename = `Doc ${fileNumber}`;
             }
 
             const fileHandle = await folderHandle.getFileHandle(
