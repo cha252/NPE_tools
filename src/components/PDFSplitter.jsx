@@ -23,6 +23,9 @@ function PdfSplitter() {
         }
 
         const data = await response.json();
+        
+        console.log(data);
+        console.log(data.filename);
 
         return data.filename;
     }
