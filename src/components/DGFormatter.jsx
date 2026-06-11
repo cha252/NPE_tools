@@ -23,6 +23,8 @@ function DGFormatter() {
         "tangimomana":"WMA 50474259",
         "aokautere":"WMA 50474259",
         "cheltenham":"WMA 50474259",
+        "kimbolton":"WMA 50464259",
+        "halcombe":"WMA 50464259",
 
         // Whanganui
         "whanganui":"WWG 50474262",
