@@ -13,7 +13,7 @@ function PdfSplitter() {
 
         formData.append("pdf", blob, "document.pdf");
 
-        const response = await fetch("http://localhost:5000/ocr", {
+        const response = await fetch("http://localhost:8000/ocr", {
             method: "POST",
             body: formData
         });
