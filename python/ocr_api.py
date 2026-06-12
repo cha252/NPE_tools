@@ -9,7 +9,9 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8000"],  # React dev server
+    # Allow the frontend origin(s). For quick testing from GitHub Pages or other hosts,
+    # use "*" or add specific origins like "https://cha252.github.io".
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
