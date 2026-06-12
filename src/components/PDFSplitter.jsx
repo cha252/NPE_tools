@@ -13,18 +13,37 @@ function PdfSplitter() {
 
         formData.append("pdf", blob, "document.pdf");
 
-        const response = await fetch("http://localhost:8000/ocr", {
-            method: "POST",
-            body: formData
-        });
+        try {
+            const response = await fetch("http://localhost:8000/ocr", {
+                method: "POST",
+                body: formData
+            });
 
-        if (!response.ok) {
-            throw new Error("OCR request failed");
+            console.log("OCR fetch status:", response.status, response.statusText);
+
+            const text = await response.text();
+
+            let data = null;
+            try {
+                data = JSON.parse(text);
+            }
+            catch (e) {
+                console.warn("OCR response is not JSON:", text);
+            }
+
+            if (!response.ok) {
+                console.error("OCR request failed:", response.status, response.statusText, text);
+                throw new Error("OCR request failed");
+            }
+
+            console.log("OCR response body:", data ?? text);
+
+            return data?.filename ?? null;
         }
-
-        const data = await response.json();
-
-        return data.filename;
+        catch (networkError) {
+            console.error("OCR network/CORS error:", networkError);
+            throw networkError;
+        }
     }
 
     async function splitPdf() {
