@@ -58,8 +58,21 @@ function PdfSplitter() {
 
             let filename;
 
+            function sanitizeFilename(name) {
+                if (!name) return null;
+                // remove control chars and characters invalid on Windows
+                let s = name.replace(/[<>:\"/\\|?*\x00-\x1F]/g, "");
+                // replace newlines with space and collapse whitespace
+                s = s.replace(/[\r\n]+/g, " ").replace(/\s+/g, " ").trim();
+                // remove trailing dots/spaces
+                s = s.replace(/[.\s]+$/g, "");
+                return s || null;
+            }
+
             try {
-                filename = await getFilenameFromOCR(outputBytes);
+                const raw = await getFilenameFromOCR(outputBytes);
+                console.log("OCR returned filename:", raw);
+                filename = sanitizeFilename(raw) || `Document ${fileNumber}`;
             }
             catch (error) {
                 console.error(error);
