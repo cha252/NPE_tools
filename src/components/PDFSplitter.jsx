@@ -43,6 +43,8 @@ function PdfSplitter() {
         const folderHandle = await window.showDirectoryPicker();
 
         let fileNumber = 1;
+        let successCount = 0;
+        let failureCount = 0;
 
         function sanitizeFilename(name) {
             if (!name) return null;
@@ -55,51 +57,81 @@ function PdfSplitter() {
             return s || null;
         }
 
+        function downloadBlob(bytes, filename) {
+            const blob = new Blob([bytes], { type: "application/pdf" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `${filename}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+
         for (let i = 0; i < pageCount; i += 2) {
+            const chunkNumber = fileNumber;
+            let filename;
+            let outputBytes;
+
             try {
                 const newPdf = await PDFDocument.create();
 
                 const pages = await newPdf.copyPages(
                     sourcePdf,
-                    [i, i + 1].filter(p => p < pageCount)
+                    [i, i + 1].filter((p) => p < pageCount)
                 );
 
-                pages.forEach(page => newPdf.addPage(page));
+                pages.forEach((page) => newPdf.addPage(page));
 
-                const outputBytes = await newPdf.save();
+                outputBytes = await newPdf.save();
+            }
+            catch (error) {
+                console.error("Failed to build PDF chunk", chunkNumber, error);
+                failureCount++;
+                fileNumber++;
+                continue;
+            }
 
-                let filename;
+            try {
+                const raw = await getFilenameFromOCR(outputBytes);
+                console.log("OCR returned filename for chunk", chunkNumber, ":", raw);
+                filename = sanitizeFilename(raw) || `Document ${chunkNumber}`;
+            }
+            catch (error) {
+                console.error("OCR failed for chunk", chunkNumber, error);
+                filename = `Document ${chunkNumber}`;
+            }
 
-                try {
-                    const raw = await getFilenameFromOCR(outputBytes);
-                    console.log("OCR returned filename for chunk", fileNumber, ":", raw);
-                    filename = sanitizeFilename(raw) || `Document ${fileNumber}`;
-                }
-                catch (error) {
-                    console.error("OCR failed for chunk", fileNumber, error);
-                    filename = `Document ${fileNumber}`;
-                }
-
+            try {
                 const fileHandle = await folderHandle.getFileHandle(
                     `${filename}.pdf`,
                     { create: true }
                 );
                 const writable = await fileHandle.createWritable();
-
                 await writable.write(outputBytes);
                 await writable.close();
-
-                fileNumber++;
+                console.log("Saved file to directory:", `${filename}.pdf`);
+                successCount++;
             }
             catch (error) {
-                console.error("Failed to save chunk", fileNumber, error);
-                // continue on error so later pages still attempt to save
-                fileNumber++;
-                continue;
+                console.error("Directory save failed for chunk", chunkNumber, error);
+                console.warn("Falling back to browser download for", `${filename}.pdf`);
+                try {
+                    downloadBlob(outputBytes, filename);
+                    successCount++;
+                }
+                catch (downloadError) {
+                    console.error("Fallback download failed for", filename, downloadError);
+                    failureCount++;
+                }
             }
+
+            fileNumber++;
         }
 
-        alert("Finished");
+        alert(`Finished. ${successCount} files saved, ${failureCount} failures.`);
+
     }
 
     return (
