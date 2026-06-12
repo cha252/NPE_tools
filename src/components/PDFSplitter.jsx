@@ -61,6 +61,36 @@ function PdfSplitter() {
 
         const folderHandle = await window.showDirectoryPicker();
 
+        // Request persistent write permission up-front. If the user doesn't grant it,
+        // we'll fall back to downloading files via the browser downloads folder.
+        let useDirectorySave = true;
+        try {
+            // Some browsers implement requestPermission/queryPermission on handles
+            if (typeof folderHandle.requestPermission === "function") {
+                const perm = await folderHandle.requestPermission({ mode: "readwrite" });
+                console.log("folderHandle.requestPermission:", perm);
+                if (perm !== "granted") {
+                    console.warn("Directory write permission not granted; falling back to downloads.");
+                    useDirectorySave = false;
+                }
+            }
+            else if (typeof folderHandle.queryPermission === "function") {
+                const q = await folderHandle.queryPermission({ mode: "readwrite" });
+                console.log("folderHandle.queryPermission:", q);
+                if (q !== "granted") {
+                    const r = await folderHandle.requestPermission({ mode: "readwrite" }).catch(() => null);
+                    console.log("folderHandle.requestPermission (fallback):", r);
+                    if (r !== "granted") {
+                        useDirectorySave = false;
+                    }
+                }
+            }
+        }
+        catch (e) {
+            console.warn("Directory permission request threw:", e);
+            useDirectorySave = false;
+        }
+
         let fileNumber = 1;
         let successCount = 0;
         let failureCount = 0;
@@ -122,26 +152,40 @@ function PdfSplitter() {
                 filename = `Document ${chunkNumber}`;
             }
 
-            try {
-                const fileHandle = await folderHandle.getFileHandle(
-                    `${filename}.pdf`,
-                    { create: true }
-                );
-                const writable = await fileHandle.createWritable();
-                await writable.write(outputBytes);
-                await writable.close();
-                console.log("Saved file to directory:", `${filename}.pdf`);
-                successCount++;
+            if (useDirectorySave) {
+                try {
+                    const fileHandle = await folderHandle.getFileHandle(
+                        `${filename}.pdf`,
+                        { create: true }
+                    );
+                    const writable = await fileHandle.createWritable();
+                    await writable.write(outputBytes);
+                    await writable.close();
+                    console.log("Saved file to directory:", `${filename}.pdf`);
+                    successCount++;
+                }
+                catch (error) {
+                    console.error("Directory save failed for chunk", chunkNumber, error);
+                    console.warn("Falling back to browser download for", `${filename}.pdf`);
+                    try {
+                        downloadBlob(outputBytes, filename);
+                        successCount++;
+                    }
+                    catch (downloadError) {
+                        console.error("Fallback download failed for", filename, downloadError);
+                        failureCount++;
+                    }
+                }
             }
-            catch (error) {
-                console.error("Directory save failed for chunk", chunkNumber, error);
-                console.warn("Falling back to browser download for", `${filename}.pdf`);
+            else {
+                // Directory saving not available; download via browser
                 try {
                     downloadBlob(outputBytes, filename);
+                    console.log("Downloaded file via browser:", `${filename}.pdf`);
                     successCount++;
                 }
                 catch (downloadError) {
-                    console.error("Fallback download failed for", filename, downloadError);
+                    console.error("Download failed for", filename, downloadError);
                     failureCount++;
                 }
             }
