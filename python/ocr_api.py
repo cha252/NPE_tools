@@ -20,12 +20,20 @@ app.add_middleware(
 @app.post("/ocr")
 async def ocr(pdf: UploadFile = File(...)):
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+    with tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=".pdf"
+    ) as tmp:
+
         tmp.write(await pdf.read())
         temp_path = tmp.name
 
     try:
         filename = extract_filename(temp_path)
-        return {"filename": filename}
+
+        return {
+            "filename": filename
+        }
+
     finally:
         os.remove(temp_path)

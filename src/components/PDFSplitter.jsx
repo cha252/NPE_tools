@@ -24,8 +24,12 @@ function PdfSplitter() {
             const text = await response.text();
 
             let data = null;
-            try { data = JSON.parse(text); }
-            catch (e) { console.warn("OCR response is not JSON:", text); }
+            try {
+                data = JSON.parse(text);
+            }
+            catch (e) {
+                console.warn("OCR response is not JSON:", text);
+            }
 
             if (!response.ok) {
                 console.error("OCR request failed:", response.status, response.statusText, text);
@@ -33,6 +37,7 @@ function PdfSplitter() {
             }
 
             console.log("OCR response body:", data ?? text);
+
             return data?.filename ?? null;
         }
         catch (networkError) {
@@ -56,6 +61,8 @@ function PdfSplitter() {
 
         const folderHandle = await window.showDirectoryPicker();
 
+        // Request persistent write permission up-front. If the user doesn't grant it,
+        // we'll fall back to downloading files via the browser downloads folder.
         let useDirectorySave = true;
         try {
             // Some browsers implement requestPermission/queryPermission on handles
@@ -118,8 +125,14 @@ function PdfSplitter() {
 
             try {
                 const newPdf = await PDFDocument.create();
-                const pages = await newPdf.copyPages(sourcePdf, [i, i + 1].filter((p) => p < pageCount));
+
+                const pages = await newPdf.copyPages(
+                    sourcePdf,
+                    [i, i + 1].filter((p) => p < pageCount)
+                );
+
                 pages.forEach((page) => newPdf.addPage(page));
+
                 outputBytes = await newPdf.save();
             }
             catch (error) {
@@ -165,6 +178,7 @@ function PdfSplitter() {
                 }
             }
             else {
+                // Directory saving not available; download via browser
                 try {
                     downloadBlob(outputBytes, filename);
                     console.log("Downloaded file via browser:", `${filename}.pdf`);
@@ -175,19 +189,32 @@ function PdfSplitter() {
                     failureCount++;
                 }
             }
+
             fileNumber++;
         }
+
         alert(`Finished. ${successCount} files saved, ${failureCount} failures.`);
+
     }
 
     return (
         <>
             <h2>Split PDF into 2-page files</h2>
-            <input type="file" accept=".pdf" ref={fileInputRef} />
+
+            <input
+                type="file"
+                accept=".pdf"
+                ref={fileInputRef}
+            />
+
             <br />
             <br />
-            <button onClick={splitPdf}> Split PDF </button>
+
+            <button onClick={splitPdf}>
+                Split PDF
+            </button>
         </>
     );
 }
+
 export default PdfSplitter;
