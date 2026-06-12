@@ -44,51 +44,59 @@ function PdfSplitter() {
 
         let fileNumber = 1;
 
+        function sanitizeFilename(name) {
+            if (!name) return null;
+            // remove control chars and characters invalid on Windows
+            let s = name.replace(/[<>:\"/\\|?*\x00-\x1F]/g, "");
+            // replace newlines with space and collapse whitespace
+            s = s.replace(/[\r\n]+/g, " ").replace(/\s+/g, " ").trim();
+            // remove trailing dots/spaces
+            s = s.replace(/[.\s]+$/g, "");
+            return s || null;
+        }
+
         for (let i = 0; i < pageCount; i += 2) {
-            const newPdf = await PDFDocument.create();
-
-            const pages = await newPdf.copyPages(
-                sourcePdf,
-                [i, i + 1].filter(p => p < pageCount)
-            );
-
-            pages.forEach(page => newPdf.addPage(page));
-
-            const outputBytes = await newPdf.save();
-
-            let filename;
-
-            function sanitizeFilename(name) {
-                if (!name) return null;
-                // remove control chars and characters invalid on Windows
-                let s = name.replace(/[<>:\"/\\|?*\x00-\x1F]/g, "");
-                // replace newlines with space and collapse whitespace
-                s = s.replace(/[\r\n]+/g, " ").replace(/\s+/g, " ").trim();
-                // remove trailing dots/spaces
-                s = s.replace(/[.\s]+$/g, "");
-                return s || null;
-            }
-
             try {
-                const raw = await getFilenameFromOCR(outputBytes);
-                console.log("OCR returned filename:", raw);
-                filename = sanitizeFilename(raw) || `Document ${fileNumber}`;
+                const newPdf = await PDFDocument.create();
+
+                const pages = await newPdf.copyPages(
+                    sourcePdf,
+                    [i, i + 1].filter(p => p < pageCount)
+                );
+
+                pages.forEach(page => newPdf.addPage(page));
+
+                const outputBytes = await newPdf.save();
+
+                let filename;
+
+                try {
+                    const raw = await getFilenameFromOCR(outputBytes);
+                    console.log("OCR returned filename for chunk", fileNumber, ":", raw);
+                    filename = sanitizeFilename(raw) || `Document ${fileNumber}`;
+                }
+                catch (error) {
+                    console.error("OCR failed for chunk", fileNumber, error);
+                    filename = `Document ${fileNumber}`;
+                }
+
+                const fileHandle = await folderHandle.getFileHandle(
+                    `${filename}.pdf`,
+                    { create: true }
+                );
+                const writable = await fileHandle.createWritable();
+
+                await writable.write(outputBytes);
+                await writable.close();
+
+                fileNumber++;
             }
             catch (error) {
-                console.error(error);
-                filename = `Document ${fileNumber}`;
+                console.error("Failed to save chunk", fileNumber, error);
+                // continue on error so later pages still attempt to save
+                fileNumber++;
+                continue;
             }
-
-            const fileHandle = await folderHandle.getFileHandle(
-                `${filename}.pdf`,
-                { create: true }
-            );
-            const writable = await fileHandle.createWritable();
-
-            await writable.write(outputBytes);
-            await writable.close();
-
-            fileNumber++;
         }
 
         alert("Finished");
