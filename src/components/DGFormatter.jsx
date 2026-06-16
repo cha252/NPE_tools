@@ -127,7 +127,7 @@ function DGFormatter() {
                         <div>DG Labelling request - {output.request} - ICP {output.icp}</div>
                         <div><strong>{output.address}</strong></div>
                         <div>Order Number {output.region}</div>
-                        <div>PowerCo WO# 4100000461</div>
+                        <div>Purchase Order 4100000461</div>
                     </>
                 )}
             </div>
