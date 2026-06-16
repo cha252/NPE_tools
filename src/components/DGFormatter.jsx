@@ -79,12 +79,13 @@ function DGFormatter() {
             `<div>DG Labelling request - ${output.request} - ICP ${output.icp}</div>
             <div><strong>${output.address}</strong></div>
             <div>Order Number ${output.region}</div>
-            <div>Purchase Order 4100000461</div>`
+            <div>Purchase Order 4100000461</div>`;
 
         const outputText =
             `DG Labelling request - ${output.request} - ICP ${output.icp}
             ${output.address}
-            ${output.region}`;
+            ${output.region}
+            Purchase Order 4100000461`;
 
         await navigator.clipboard.write([
             new ClipboardItem({
