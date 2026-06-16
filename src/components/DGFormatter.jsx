@@ -78,7 +78,8 @@ function DGFormatter() {
         const outputHtml =
             `<div>DG Labelling request - ${output.request} - ICP ${output.icp}</div>
             <div><strong>${output.address}</strong></div>
-            <div>${output.region}</div>`;
+            <div>Order Number ${output.region}</div>
+            <div>Purchase Order 4100000461</div>`
 
         const outputText =
             `DG Labelling request - ${output.request} - ICP ${output.icp}
