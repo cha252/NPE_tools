@@ -75,17 +75,18 @@ function DGFormatter() {
     }
 
     async function copyOutput() {
+        const regionCode = output.region.split(" \n")[0];
+        const formattedRegion = `${regionCode}-4100000461`;
+        
         const outputHtml =
             `<div>DG Labelling request - ${output.request} - ICP ${output.icp}</div>
             <div><strong>${output.address}</strong></div>
-            <div>${output.region}</div>
-            <div>Purchase Order 4100000461</div>`;
+            <div>${formattedRegion}</div>`;
 
         const outputText =
             `DG Labelling request - ${output.request} - ICP ${output.icp}
             ${output.address}
-            ${output.region}
-            Purchase Order 4100000461`;
+            ${formattedRegion}`;
 
         await navigator.clipboard.write([
             new ClipboardItem({
@@ -128,8 +129,7 @@ function DGFormatter() {
                     <>
                         <div>DG Labelling request - {output.request} - ICP {output.icp}</div>
                         <div><strong>{output.address}</strong></div>
-                        <div>{output.region}</div>
-                        <div>Purchase Order 4100000461</div>
+                        <div>{output.region.split(" \n")[0]}-4100000461</div>
                     </>
                 )}
             </div>
