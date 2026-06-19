@@ -217,10 +217,12 @@ end`},fa=function(){return`<`+[...arguments].join(``)+`>`},pa=function(e){return
         <div><br></div>
         <div><strong>${g} ${h}</strong></div>
         <div><strong>${{one:`Single phase`,two:`Two phase`,three:`Three phase`}[x.toLowerCase()]||x} ${S}A</strong></div>
+        ${ne?``:`
         <div><strong>Connect [size]mm ${{one:`1`,two:`2`,three:`3`}[x.toLowerCase()]||x}C NS service cable to ${C===`Pillar`?`Pillar Box # `+w:C+` # `+w}</strong></div>
         <div><strong>COC, ROI?, & lock off photo attached</strong></div>
         <div><strong>Permanent/Temporary: ${_}</strong></div>
         <div><strong>J A Russell PO# 45XXXX</strong></div>
+        `}
         ${ne?`
         <div><strong>Decommission ICP ${h}</strong></div>
         <div>${C} ${w}</div>
