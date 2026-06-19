@@ -12,6 +12,9 @@ function DGFormatter() {
         "featherston":"WWP \n50551886",
         "martinborough":"WWP \n50551886",
         "eketahuna":"WWP \n50551886",
+        "dyerville":"WWP \n50551886",
+        "castlepoint":"WWP \n50551886",
+        "pahiatua":"WWP \n50551886",
 
         // Manawatu
         "palmerston north":"WMA \n50551888",
@@ -25,6 +28,9 @@ function DGFormatter() {
         "cheltenham":"WMA \n50551888",
         "kimbolton":"WMA \n50551888",
         "halcombe":"WMA \n50551888",
+        "rongotea":"WMA \n50551888",
+        "longburn":"WMA \n50551888",
+        "colyton":"WMA \n50551888",
 
         // Whanganui
         "whanganui":"WWG \n50551887",
@@ -35,6 +41,10 @@ function DGFormatter() {
         "ohakune":"WWG \n50551887",
         "brunswick":"WWG \n50551887",   
         "hunterville":"WWG \n50551887",
+        "castlecliff":"WWG \n50551887",
+        "durie hill":"WWG \n50551887",
+        "gonville":"WWG \n50551887",
+        "springvale":"WWG \n50551887",
     };
 
     const [input, setInput] = useState("");
@@ -83,13 +93,15 @@ function DGFormatter() {
             `<div>DG Labelling request - ${output.request} - ICP ${output.icp}</div>
             <div><strong>${output.address}</strong></div>
             <div>${formattedRegion}</div>
-            <div>${poNumber}</div>`;
+            <div>${poNumber}</div>
+            <div>${output.request} - DG Label</div>`;
 
         const outputText =
             `DG Labelling request - ${output.request} - ICP ${output.icp}
             ${output.address}
             ${formattedRegion}
-            ${poNumber}`;
+            ${poNumber}
+            ${output.request} - DG Label`;
 
         await navigator.clipboard.write([
             new ClipboardItem({
@@ -134,6 +146,7 @@ function DGFormatter() {
                         <div><strong>{output.address}</strong></div>
                         <div>{output.region.split(" \n")[0]} - Purchase Order 4100000461</div>
                         <div>{output.region.split(" \n")[1]}</div>
+                        <div>{output.request} - DG Label</div>
                     </>
                 )}
             </div>
