@@ -108,6 +108,8 @@ function NRFormatter() {
         const electricianEmail = getValue(electricianSection, "Email:", "Nominated Inspector/Meter Installer:");
         const inspector = getValue(electricianSection, "Nominated Inspector/Meter Installer:", "END");
 
+        const isDecommission = jobClassification.toLowerCase().includes("decommission");
+
         const dueDate = new Date();
         dueDate.setMonth(dueDate.getMonth() + 1);
         const formattedDate = String(dueDate.getDate()).padStart(2, "0") + "/" + String(dueDate.getMonth() + 1).padStart(2, "0") + "/" + dueDate.getFullYear();
@@ -174,17 +176,29 @@ function NRFormatter() {
                 Connect & Liven (Do not liven if unsafe)
             </span>
         </div>
-        <div style="text-align:center;">
-            <span style="font-weight:bold; font-size:10pt;">
-                Connect Only
-            </span>
-        </div>
-        <div style="text-align:center;">
-            <span style="font-weight:bold; font-size:10pt;">
-                Contact electrician ${electricianPhone} or Kate/Chisora if any issues
-            </span>
-        </div>
-        
+        ${isDecommission ? `
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    Carry out decommission to PowerCo standard. Fill in isolation/disconnection tag attached and leave in meter box at site so that third parties can clearly see the status of the connection
+                </span>
+            </div>
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    This decommission was carried out by a third party. PowerCo have requested that we go to site and check it was carried out to PowerCo standard and to provide a completed As Built
+                </span>
+            </div>
+        ` : `
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    Connect Only
+                </span>
+            </div>
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    Contact electrician ${electricianPhone} or Kate/Chisora if any issues
+                </span>
+            </div>
+        `}
         <br>
         <strong>ORIGINAL SAP TEXT</strong><br>
         <div>${originalHTML}</div>
