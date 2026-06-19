@@ -128,12 +128,13 @@ function NRFormatter() {
         </div>
         <div><br></div>
         <div><strong>${jobClassification} ${icpNumber}</strong></div>
+        
+        ${!isDecommission ? `
         <div><strong>${({
             one: "Single phase",
             two: "Two phase",
             three: "Three phase"
         }[phasesRequired.toLowerCase()] || phasesRequired)} ${loadDemand}A</strong></div>
-        ${!isDecommission ? `
         <div><strong>Connect [size]mm ${({
             one: "1",
             two: "2",
