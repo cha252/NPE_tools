@@ -147,15 +147,14 @@ function NRFormatter() {
         <div><strong>Permanent/Temporary: ${permanent}</strong></div>
         <div><strong>J A Russell PO# 45XXXX</strong></div>
         ` : ``}
-        ${isDecommission ? `
-        <div><strong>Decommission ICP ${icpNumber}</strong></div>
+        ${isDecommission ? `<strong>
         <div>${assetType} ${assetNumber}</div>
         <div>Transformer Site ID ${transformerSite}</div>
         <div>Site address: ${siteAddress}</div>
         <div>${addLine("Additional Details", additionalDetails)}</div>
         <div>High level job scope ${jobScope}</div>
         <br>
-        <div><strong>ELECTRICIAN DETAILS</strong></div>
+        <div>ELECTRICIAN DETAILS</strong></div>
         ` : `
         <div><br></div>
         <div><strong>SITE DETAILS</strong></div>
