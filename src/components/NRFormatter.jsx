@@ -145,6 +145,16 @@ function NRFormatter() {
         <div><strong>COC, ROI?, & lock off photo attached</strong></div>
         <div><strong>Permanent/Temporary: ${permanent}</strong></div>
         <div><strong>J A Russell PO# 45XXXX</strong></div>
+        ${isDecommission ? `
+        <div><strong>Decommission ICP ${icpNumber}</strong></div>
+        <div>${assetType} ${assetNumber}</div>
+        <div>Transformer Site ID ${transformerSite}</div>
+        <div>Site address: ${siteAddress}</div>
+        <div>${addLine("Additional Details", additionalDetails)}</div>
+        <div>High level job scope ${jobScope}</div>
+        <br>
+        <div><strong>ELECTRICIAN DETAILS</strong></div>
+        ` : `
         <div><br></div>
         <div><strong>SITE DETAILS</strong></div>
         <div>${addLine("Site Address", siteAddress)}</div>
@@ -165,17 +175,13 @@ function NRFormatter() {
         <div>${addLine("Comments", comments)}</div>
         <div><br></div>
         <div><strong>ELECTRICIAN DETAILS</strong></div>
+        `}
         <div>${addLine("Company", electricianCompany)}</div>
         <div>${addLine("Name", electricianName)}</div>
         <div>${addLine("Phone", electricianPhone)}</div>
         <div>${addLine("Email", electricianEmail)}</div>
         <div>${addLine("Nominated Inspector/Meter Installer", inspector)}</div>
         
-        <div style="text-align:center;">
-            <span style="font-weight:bold; font-size:10pt;">
-                Connect & Liven (Do not liven if unsafe)
-            </span>
-        </div>
         ${isDecommission ? `
             <div style="text-align:center;">
                 <span style="font-weight:bold; font-size:10pt;">
@@ -188,6 +194,11 @@ function NRFormatter() {
                 </span>
             </div>
         ` : `
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    Connect & Liven (Do not liven if unsafe)
+                </span>
+            </div>
             <div style="text-align:center;">
                 <span style="font-weight:bold; font-size:10pt;">
                     Connect Only
