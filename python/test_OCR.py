@@ -7,6 +7,10 @@ from pdf2image import convert_from_path
 
 POPPLER_PATH = r"C:\poppler-26.02.0\Library\bin"
 
+# Crop fraction constants: top and bottom of the page
+CROP_TOP_FRACTION = 3 / 16
+CROP_BOTTOM_FRACTION = 7 / 16
+
 reader = easyocr.Reader(['en'], gpu=False)
 
 def extract_filename(pdf_path):
@@ -22,10 +26,16 @@ def extract_filename(pdf_path):
     )
 
     image = pages[0]
-
     image_np = np.array(image)
 
-    results = reader.readtext(image_np)
+    height = image_np.shape[0]
+    width = image_np.shape[1]
+    top = int(height * CROP_TOP_FRACTION)
+    bottom = int(height * CROP_BOTTOM_FRACTION)
+
+    cropped_image = image_np[top:bottom, 0:width]
+
+    results = reader.readtext(cropped_image)
 
     for result in results:
         print(result[1])
