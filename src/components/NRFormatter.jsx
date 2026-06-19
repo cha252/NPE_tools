@@ -133,6 +133,7 @@ function NRFormatter() {
             two: "Two phase",
             three: "Three phase"
         }[phasesRequired.toLowerCase()] || phasesRequired)} ${loadDemand}A</strong></div>
+        ${!isDecommission ? `
         <div><strong>Connect [size]mm ${({
             one: "1",
             two: "2",
@@ -145,6 +146,7 @@ function NRFormatter() {
         <div><strong>COC, ROI?, & lock off photo attached</strong></div>
         <div><strong>Permanent/Temporary: ${permanent}</strong></div>
         <div><strong>J A Russell PO# 45XXXX</strong></div>
+        ` : ``}
         ${isDecommission ? `
         <div><strong>Decommission ICP ${icpNumber}</strong></div>
         <div>${assetType} ${assetNumber}</div>
