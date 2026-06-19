@@ -243,11 +243,6 @@ end`},fa=function(){return`<`+[...arguments].join(``)+`>`},pa=function(e){return
         <div>${o(`Email`,j)}</div>
         <div>${o(`Nominated Inspector/Meter Installer`,te)}</div>
         
-        <div style="text-align:center;">
-            <span style="font-weight:bold; font-size:10pt;">
-                Connect & Liven (Do not liven if unsafe)
-            </span>
-        </div>
         ${ne?`
             <div style="text-align:center;">
                 <span style="font-weight:bold; font-size:10pt;">
@@ -260,6 +255,11 @@ end`},fa=function(){return`<`+[...arguments].join(``)+`>`},pa=function(e){return
                 </span>
             </div>
         `:`
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    Connect & Liven (Do not liven if unsafe)
+                </span>
+            </div>
             <div style="text-align:center;">
                 <span style="font-weight:bold; font-size:10pt;">
                     Connect Only
