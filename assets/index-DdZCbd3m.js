@@ -204,10 +204,10 @@ end`},fa=function(){return`<`+[...arguments].join(``)+`>`},pa=function(e){return
 
         </table>
         
-        `)}async function i(){let e=document.createElement(`div`);e.innerHTML=t,await navigator.clipboard.write([new ClipboardItem({"text/html":new Blob([t],{type:`text/html`}),"text/plain":new Blob([e.innerText],{type:`text/plain`})})])}return(0,qd.jsxs)(qd.Fragment,{children:[(0,qd.jsx)(`h1`,{children:`GW Table Formatter`}),(0,qd.jsx)(`div`,{ref:e,className:`GW-input`,contentEditable:!0,suppressContentEditableWarning:!0}),(0,qd.jsx)(`br`,{}),(0,qd.jsx)(`button`,{onClick:r,children:`Convert`}),(0,qd.jsx)(`button`,{onClick:i,children:`Copy Output`}),(0,qd.jsx)(`div`,{className:`output`,dangerouslySetInnerHTML:{__html:t}})]})}var Kd,qd,Jd=o((()=>{Kd=l(d()),oe(),qd=ce()}));function Yd(){let e=(0,Xd.useRef)(null),[t,n]=(0,Xd.useState)(``),[r,i]=(0,Xd.useState)(``);function a(e,t,n=null){let r=e.indexOf(t);if(r===-1)return``;let i=r+t.length,a=e.length;return n&&(Array.isArray(n)||(n=[n]),n.forEach(t=>{let n=e.indexOf(t,i);n!==-1&&n<a&&(a=n)})),e.substring(i,a).trim()}function o(e,t){return t?.trim()?`${e}: ${t}`:``}function s(e){if(!e)return``;let t=e.replace(/\D/g,``);return t.startsWith(`640`)&&(t=`64`+t.substring(3)),t.startsWith(`642`)&&t.length>=10?(`0`+t.substring(2)).replace(/(\d{3})(\d{3})(\d+)/,`$1 $2 $3`):t.startsWith(`64`)&&t.length>=10?(`0`+t.substring(2)).replace(/(\d{2})(\d{3})(\d+)/,`$1 $2 $3`):e}function c(e,t,n=[]){let r=e.indexOf(t);if(r===-1)return``;let i=r+t.length,a=e.length;return n.forEach(t=>{let n=e.indexOf(t,i);n!==-1&&n<a&&(a=n)}),e.substring(i,a).trim()}function l(){let n=e.current.innerText,r=e.current.innerHTML,l=c(n,`SITE DETAILS`,[`CONNECTION DETAILS`]),u=c(n,`CONNECTION DETAILS - NEW CONNECTION`,[`APPLICANT DETAILS`]),d=c(n,`ELECTRICIAN DETAILS`,[`ELECTRICITY BILL PAYER DETAILS`]),f=t,p=a(f,`Work order number:`,`Subject:`),m=a(f,`Subject:`,`Work order status:`).split(`-`).slice(0,3).join(`-`),h=a(f,`ICP number:`,`END`),g=a(n,`Network Ready Job Classification:`,[`Permanent/Temporary:`,`SITE DETAILS`]),_=a(n,`Permanent/Temporary:`,`SITE DETAILS`),v=a(l,`Site Address:`,[`Legal Description:`,`Additional Details`]),y=a(l,`Legal Description:`,`Additional Details:`),b=a(l,`Additional Details:`,`Meter Number`),x=a(u,`Phases Required:`,[`Load Demand:`,`Required`]),S=a(u,`Load Demand:`,`BTS Installation Details:`),C=a(u,`Asset Type:`,`Asset Number:`),w=a(u,`Asset Number:`,`Transformer Site ID:`),T=a(u,`Transformer Site ID:`,`High Level Job Scope:`),E=a(u,`High Level Job Scope:`,`Land Description:`),D=a(u,`Land Description:`,`Comments:`),O=a(u,`Comments:`),k=a(d,`Company:`,`Name:`),ee=a(d,`Name:`,`Phone:`),A=s(a(d,`Phone:`,`Email:`)),j=a(d,`Email:`,`Nominated Inspector/Meter Installer:`),te=a(d,`Nominated Inspector/Meter Installer:`,`END`),ne=new Date;ne.setMonth(ne.getMonth()+1),i(`
+        `)}async function i(){let e=document.createElement(`div`);e.innerHTML=t,await navigator.clipboard.write([new ClipboardItem({"text/html":new Blob([t],{type:`text/html`}),"text/plain":new Blob([e.innerText],{type:`text/plain`})})])}return(0,qd.jsxs)(qd.Fragment,{children:[(0,qd.jsx)(`h1`,{children:`GW Table Formatter`}),(0,qd.jsx)(`div`,{ref:e,className:`GW-input`,contentEditable:!0,suppressContentEditableWarning:!0}),(0,qd.jsx)(`br`,{}),(0,qd.jsx)(`button`,{onClick:r,children:`Convert`}),(0,qd.jsx)(`button`,{onClick:i,children:`Copy Output`}),(0,qd.jsx)(`div`,{className:`output`,dangerouslySetInnerHTML:{__html:t}})]})}var Kd,qd,Jd=o((()=>{Kd=l(d()),oe(),qd=ce()}));function Yd(){let e=(0,Xd.useRef)(null),[t,n]=(0,Xd.useState)(``),[r,i]=(0,Xd.useState)(``);function a(e,t,n=null){let r=e.indexOf(t);if(r===-1)return``;let i=r+t.length,a=e.length;return n&&(Array.isArray(n)||(n=[n]),n.forEach(t=>{let n=e.indexOf(t,i);n!==-1&&n<a&&(a=n)})),e.substring(i,a).trim()}function o(e,t){return t?.trim()?`${e}: ${t}`:``}function s(e){if(!e)return``;let t=e.replace(/\D/g,``);return t.startsWith(`640`)&&(t=`64`+t.substring(3)),t.startsWith(`642`)&&t.length>=10?(`0`+t.substring(2)).replace(/(\d{3})(\d{3})(\d+)/,`$1 $2 $3`):t.startsWith(`64`)&&t.length>=10?(`0`+t.substring(2)).replace(/(\d{2})(\d{3})(\d+)/,`$1 $2 $3`):e}function c(e,t,n=[]){let r=e.indexOf(t);if(r===-1)return``;let i=r+t.length,a=e.length;return n.forEach(t=>{let n=e.indexOf(t,i);n!==-1&&n<a&&(a=n)}),e.substring(i,a).trim()}function l(){let n=e.current.innerText,r=e.current.innerHTML,l=c(n,`SITE DETAILS`,[`CONNECTION DETAILS`]),u=c(n,`CONNECTION DETAILS - NEW CONNECTION`,[`APPLICANT DETAILS`]),d=c(n,`ELECTRICIAN DETAILS`,[`ELECTRICITY BILL PAYER DETAILS`]),f=t,p=a(f,`Work order number:`,`Subject:`),m=a(f,`Subject:`,`Work order status:`).split(`-`).slice(0,3).join(`-`),h=a(f,`ICP number:`,`END`),g=a(n,`Network Ready Job Classification:`,[`Permanent/Temporary:`,`SITE DETAILS`]),_=a(n,`Permanent/Temporary:`,`SITE DETAILS`),v=a(l,`Site Address:`,[`Legal Description:`,`Additional Details`]),y=a(l,`Legal Description:`,`Additional Details:`),b=a(l,`Additional Details:`,`Meter Number`),x=a(u,`Phases Required:`,[`Load Demand:`,`Required`]),S=a(u,`Load Demand:`,`BTS Installation Details:`),C=a(u,`Asset Type:`,`Asset Number:`),w=a(u,`Asset Number:`,`Transformer Site ID:`),T=a(u,`Transformer Site ID:`,`High Level Job Scope:`),E=a(u,`High Level Job Scope:`,`Land Description:`),D=a(u,`Land Description:`,`Comments:`),O=a(u,`Comments:`),k=a(d,`Company:`,`Name:`),ee=a(d,`Name:`,`Phone:`),A=s(a(d,`Phone:`,`Email:`)),j=a(d,`Email:`,`Nominated Inspector/Meter Installer:`),te=a(d,`Nominated Inspector/Meter Installer:`,`END`),ne=g.toLowerCase().includes(`decommission`),re=new Date;re.setMonth(re.getMonth()+1),i(`
         <div>${p} ${m}-${v}</div>
         <div>4100000589</div>
-        <div>${String(ne.getDate()).padStart(2,`0`)+`/`+String(ne.getMonth()+1).padStart(2,`0`)+`/`+ne.getFullYear()}</div>
+        <div>${String(re.getDate()).padStart(2,`0`)+`/`+String(re.getMonth()+1).padStart(2,`0`)+`/`+re.getFullYear()}</div>
 
         <div style="text-align:center;">
             <span style="font-weight:bold; text-decoration: underline; font-size:10pt;">
@@ -248,17 +248,29 @@ end`},fa=function(){return`<`+[...arguments].join(``)+`>`},pa=function(e){return
                 Connect & Liven (Do not liven if unsafe)
             </span>
         </div>
-        <div style="text-align:center;">
-            <span style="font-weight:bold; font-size:10pt;">
-                Connect Only
-            </span>
-        </div>
-        <div style="text-align:center;">
-            <span style="font-weight:bold; font-size:10pt;">
-                Contact electrician ${A} or Kate/Chisora if any issues
-            </span>
-        </div>
-        
+        ${ne?`
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    Carry out decommission to PowerCo standard. Fill in isolation/disconnection tag attached and leave in meter box at site so that third parties can clearly see the status of the connection
+                </span>
+            </div>
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    This decommission was carried out by a third party. PowerCo have requested that we go to site and check it was carried out to PowerCo standard and to provide a completed As Built
+                </span>
+            </div>
+        `:`
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    Connect Only
+                </span>
+            </div>
+            <div style="text-align:center;">
+                <span style="font-weight:bold; font-size:10pt;">
+                    Contact electrician ${A} or Kate/Chisora if any issues
+                </span>
+            </div>
+        `}
         <br>
         <strong>ORIGINAL SAP TEXT</strong><br>
         <div>${r}</div>
