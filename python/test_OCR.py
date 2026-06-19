@@ -7,9 +7,13 @@ from pdf2image import convert_from_path
 
 POPPLER_PATH = r"C:\poppler-26.02.0\Library\bin"
 
-# Crop fraction constants: top and bottom of the page
+# Crop fraction constants: top and bottom of the page (OLD DG Format)
 CROP_TOP_FRACTION = 3 / 16
 CROP_BOTTOM_FRACTION = 7 / 16
+
+# New DG format
+# CROP_TOP_FRACTION = 1/8
+# CROP_BOTTOM_FRACTION = 5//16
 
 reader = easyocr.Reader(['en'], gpu=False)
 
