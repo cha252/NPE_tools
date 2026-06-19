@@ -223,15 +223,14 @@ end`},fa=function(){return`<`+[...arguments].join(``)+`>`},pa=function(e){return
         <div><strong>Permanent/Temporary: ${_}</strong></div>
         <div><strong>J A Russell PO# 45XXXX</strong></div>
         `}
-        ${ne?`
-        <div><strong>Decommission ICP ${h}</strong></div>
+        ${ne?`<strong>
         <div>${C} ${w}</div>
         <div>Transformer Site ID ${T}</div>
         <div>Site address: ${v}</div>
         <div>${o(`Additional Details`,b)}</div>
         <div>High level job scope ${E}</div>
         <br>
-        <div><strong>ELECTRICIAN DETAILS</strong></div>
+        <div>ELECTRICIAN DETAILS</strong></div>
         `:`
         <div><br></div>
         <div><strong>SITE DETAILS</strong></div>
