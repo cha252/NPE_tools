@@ -221,6 +221,16 @@ end`},fa=function(){return`<`+[...arguments].join(``)+`>`},pa=function(e){return
         <div><strong>COC, ROI?, & lock off photo attached</strong></div>
         <div><strong>Permanent/Temporary: ${_}</strong></div>
         <div><strong>J A Russell PO# 45XXXX</strong></div>
+        ${ne?`
+        <div><strong>Decommission ICP ${h}</strong></div>
+        <div>${C} ${w}</div>
+        <div>Transformer Site ID ${T}</div>
+        <div>Site address: ${v}</div>
+        <div>${o(`Additional Details`,b)}</div>
+        <div>High level job scope ${E}</div>
+        <br>
+        <div><strong>ELECTRICIAN DETAILS</strong></div>
+        `:`
         <div><br></div>
         <div><strong>SITE DETAILS</strong></div>
         <div>${o(`Site Address`,v)}</div>
@@ -237,6 +247,7 @@ end`},fa=function(){return`<`+[...arguments].join(``)+`>`},pa=function(e){return
         <div>${o(`Comments`,O)}</div>
         <div><br></div>
         <div><strong>ELECTRICIAN DETAILS</strong></div>
+        `}
         <div>${o(`Company`,k)}</div>
         <div>${o(`Name`,ee)}</div>
         <div>${o(`Phone`,A)}</div>
